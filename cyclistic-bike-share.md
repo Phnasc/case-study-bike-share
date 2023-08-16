@@ -86,7 +86,18 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
     COUNTIF(member_casual IS NULL) AS member_casual_null_count
     FROM `tables_tripdata.tripdata2022_union`;
   </pre>
-  The decision not to drop null values in the column related to the bikes' return is based on the absence of null values in the columns associated with bike withdrawal and return, implying that the rental transactions were successfully executed. This approach ensures that data integrity is maintained while examining non-return cases. Additionally, the observation that 80% of these incidents involve casual members raises the need for deeper analysis. A strategic exploration could involve geographic analysis, aiming to identify locations with higher non-return rates and assessing factors like accessibility and signage that might contribute. Investigating time of day, rush hours, late-night hours, day of the week variations, seasonal trends, and potential impacts of special events or festivals can provide insights into user behaviors and operational dynamics, facilitating effective strategies for minimizing non-return incidents.
+  <pre>
+    SELECT 
+    rideable_type,
+    COUNT(*) AS null_end_lat_count,
+    COUNT(*) / SUM(COUNT(*)) OVER() * 100 AS percentage
+    FROM `tables_tripdata.tripdata2022_union`
+    WHERE end_lat IS NULL
+    GROUP BY rideable_type;
+  </pre>
+  
+  The decision not to drop null values in the column related to the bikes' return is based on the absence of null values in the columns associated with bike withdrawal and return, implying that the rental transactions were successfully executed. This approach ensures that data integrity is maintained while examining non-return cases. Additionally, the observation that 88% of these incidents involve casual members raises the need for deeper analysis. A strategic exploration could involve geographic analysis, aiming to identify locations with higher non-return rates and assessing factors like accessibility and signage that might contribute. Investigating time of day, rush hours, late-night hours, day of the week variations, seasonal trends, and potential impacts of special events or festivals can provide insights into user behaviors and operational dynamics, facilitating effective strategies for minimizing non-return incidents.
 </kbd>
+
 
 
