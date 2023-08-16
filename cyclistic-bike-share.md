@@ -66,6 +66,27 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
     WHERE table_name = 'tripdata2022_union';
   </pre>
   This query, which retrieves the column names and data types, holds critical importance as it provides a concise overview of the table's structure, facilitating a clear understanding of the available data fields and their corresponding data types. This knowledge is pivotal for effective data manipulation, transformation, and analysis, enabling accurate interpretation and appropriate handling of the dataset's attributes within subsequent analytical processes.
+  
+  ![column_types](https://github.com/Phnasc/case-study-bike-share/blob/main/images_cyclists_analysis/column_types.png)
+
+  <pre>
+    SELECT
+    COUNTIF(ride_id IS NULL) AS ride_id_null_count,
+    COUNTIF(rideable_type IS NULL) AS rideable_type_null_count,
+    COUNTIF(started_at IS NULL) AS started_at_null_count,
+    COUNTIF(ended_at IS NULL) AS ended_at_null_count,
+    COUNTIF(start_station_name IS NULL) AS start_station_name_null_count,
+    COUNTIF(start_station_id IS NULL) AS start_station_id_null_count,
+    COUNTIF(end_station_name IS NULL) AS end_station_name_null_count,
+    COUNTIF(end_station_id IS NULL) AS end_station_id_null_count,
+    COUNTIF(start_lat IS NULL) AS start_lat_null_count,
+    COUNTIF(start_lng IS NULL) AS start_lng_null_count,
+    COUNTIF(end_lat IS NULL) AS end_lat_null_count,
+    COUNTIF(end_lng IS NULL) AS end_lng_null_count,
+    COUNTIF(member_casual IS NULL) AS member_casual_null_count
+    FROM `tables_tripdata.tripdata2022_union`;
+  </pre>
+  The decision not to drop null values in the column related to the bikes' return is based on the absence of null values in the columns associated with bike withdrawal and return, implying that the rental transactions were successfully executed. This approach ensures that data integrity is maintained while examining non-return cases. Additionally, the observation that 80% of these incidents involve casual members raises the need for deeper analysis. A strategic exploration could involve geographic analysis, aiming to identify locations with higher non-return rates and assessing factors like accessibility and signage that might contribute. Investigating time of day, rush hours, late-night hours, day of the week variations, seasonal trends, and potential impacts of special events or festivals can provide insights into user behaviors and operational dynamics, facilitating effective strategies for minimizing non-return incidents.
 </kbd>
 
 
