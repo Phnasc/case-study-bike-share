@@ -193,6 +193,15 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
    ![mean_hours](https://github.com/Phnasc/case-study-bike-share/blob/main/images_cyclists_analysis/mean_hours2.png)
 
    Members mean ride time is 10 minutes compared to casual users 12 minutes. This discrepancy could be attributed to different motivations – casual users possibly riding for leisure while members for practical purposes such as commuting.
+   #### **Rideable Type Preference:** Annual members tend to prefer classic bikes and electric bikes, while casual riders are more inclined towards electric bikes. This indicates that classic bikes are more popular among members, while electric bikes are preferred by both casual users and members.
+   ![preferences](https://github.com/Phnasc/case-study-bike-share/blob/main/images_cyclists_analysis/preferences.png)
+   ## Why would casual riders buy Cyclistic annual memberships?
+- Access to Classic Bikes: Annual members have a higher preference for classic bikes, so they might be motivated to become members to access their preferred rideable type.
+
+- Time Savings: Annual members have shorter average ride durations, suggesting that they might use the bikes for practical purposes like commuting, which could save them time compared to alternative transportation methods.
+## How can Cyclistic use digital media to influence casual riders to become members?
+  - Convenience and Access: Emphasize the convenience of having a membership, enabling users to easily access bikes whenever needed. Use visuals and narratives that highlight the seamless experience of being a member.
+  - Member-Exclusive Features: Showcase member-exclusive features such as priority access, preferred rideable types, or access to special events. These perks could incentivize casual riders to become members.
 </kbd>
 
 
