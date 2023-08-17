@@ -133,8 +133,7 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
   plt.tight_layout()
   plt.show()
   </pre>
-  
-   ![ttt](https://github.com/Phnasc/case-study-bikeshare/blob/main/images_cyclists_analysis/incomplete_dropoff_location_data_for_rental_bikes.png)
+  ![teste](https://github.com/Phnasc/case-study-bike-share/blob/main/images_cyclists_analysis/incomplete_dropoff_location_data_for_rental_bikes.png)
    
 </kbd>
 
