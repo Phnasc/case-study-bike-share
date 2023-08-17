@@ -97,6 +97,43 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
   </pre>
   
   The decision not to drop null values in the column related to the bikes' return is based on the absence of null values in the columns associated with bike withdrawal and return, implying that the rental transactions were successfully executed. This approach ensures that data integrity is maintained while examining non-return cases. Additionally, the observation that 88% of these incidents involve casual members raises the need for deeper analysis. A strategic exploration could involve geographic analysis, aiming to identify locations with higher non-return rates and assessing factors like accessibility and signage that might contribute. Investigating time of day, rush hours, late-night hours, day of the week variations, seasonal trends, and potential impacts of special events or festivals can provide insights into user behaviors and operational dynamics, facilitating effective strategies for minimizing non-return incidents.
+  <pre>
+  import matplotlib.pyplot as plt
+  import pandas as pd
+  
+  # Create a DataFrame from the sample data
+  df = pd.read_csv('/content/bq-results-20230816-220546-1692223603574.csv')
+  
+  # Convert the 'total_rides' column to integers
+  df['total_rides'] = df['total_rides'].astype(int)
+  
+  # Pivot the DataFrame to have year and month as index, rideable_type as columns
+  pivot_df = df.pivot_table(index=["year", "month"], columns="rideable_type", values="null_end_lat_count", fill_value=0)
+  
+  # Calculate the total rides per month
+  total_rides_per_month = df.groupby(["year", "month"])["total_rides"].sum().reset_index()
+  
+  # Plot the bar plot
+  fig, ax1 = plt.subplots(figsize=(10, 6))
+  
+  ax1 = pivot_df.plot(kind="bar", stacked=True, ax=ax1)
+  ax1.set_title("Missing rental bike drop-off location information")
+  ax1.set_xlabel("Year, Month")
+  ax1.set_ylabel("Count")
+  ax1.set_xticklabels(ax1.get_xticklabels(), rotation=45)
+  ax1.legend(title="Rideable Type")
+  ax1.legend(loc="upper right")
+  
+  # Add a line plot for total_rides
+  ax2 = ax1.twinx()
+  ax2.plot(total_rides_per_month["year"].astype(str) + "-" + total_rides_per_month["month"].astype(str), total_rides_per_month["total_rides"], color="red", marker="o", label="Total Rides")
+  ax2.set_ylabel("Total Rides")
+  ax2.legend(loc="upper left")
+  
+  plt.tight_layout()
+  plt.show()
+  </pre>
+  ![Incomplete Drop-Off Location Data for Rental Bikes](https://github.com/Phnasc/case-study-bikeshare/blob/main/images_cyclists_analysis/incomplete_dropoff_location_data_for_rental_bikes.png)
 </kbd>
 
 
