@@ -133,7 +133,63 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
   plt.tight_layout()
   plt.show()
   </pre>
-  ![teste](https://github.com/Phnasc/case-study-bike-share/blob/main/images_cyclists_analysis/incomplete_dropoff_location_data_for_rental_bikes.png)
+  ![incomplete_drop_off_location_data_for_rental_bikes](https://github.com/Phnasc/case-study-bike-share/blob/main/images_cyclists_analysis/incomplete_dropoff_location_data_for_rental_bikes.png)
+   Considering these reasons, addressing the lack of awareness, providing user-friendly interfaces, educating users about the return process, and enhancing communication about the consequences of delayed returns could contribute to reducing non-return incidents and improving the overall user experience for **casual members**.
+   <pre>
+     SELECT start_lat, end_lat
+     FROM `tables_tripdata.tripdata2022_union`
+     WHERE end_lat IS NOT NULL AND member_casual = 'member';
+
+     SELECT start_lat, end_lat
+     FROM `tables_tripdata.tripdata2022_union`
+     WHERE end_lat IS NOT NULL AND member_casual = 'casual';
+   </pre>
+   By the query above was possible to analyze the mean distance traveled by members and casual users. To calculate distances between start and end points, I utilized the API directions:
+   <pre>
+      import googlemaps
+      api_key = 'API_KEY'
+      gmaps = googlemaps.Client(key=api_key)
+      
+      def calculate_distance(start_coords, end_coords):
+          try:
+              directions = gmaps.distance_matrix(start_coords, end_coords, mode='driving')
+              if directions['status'] == 'OK':
+                  distance = directions['rows'][0]['elements'][0]['distance']['value']
+                  return distance
+              else:
+                  return None
+          except Exception as e:
+              print("An error occurred:", e)
+              return None
+      
+      def calculate_mean_distance(df):
+          distances = df.apply(lambda row: calculate_distance(
+              (row['start_lat'], row['start_lng']),
+              (row['end_lat'], row['end_lng'])
+          ), axis=1)
+          valid_distances = [distance for distance in distances if distance is not None]
+          if valid_distances:
+              mean_distance = sum(valid_distances) / len(valid_distances)
+              return mean_distance
+          return None
+      
+      mean_distance_members = calculate_mean_distance(df_member)
+      if mean_distance_members is not None:
+          print("Mean Distance for Members:", mean_distance_members)
+      
+      mean_distance_casual = calculate_mean_distance(df_casual)
+      if mean_distance_casual is not None:
+          print("Mean Distance for Casual:", mean_distance_casual)
+   </pre>
+   The analysis revealed that the mean distance traveled by members is approximately 5123 meters, while for casual users, it is 2256 meters – indicating a substantial difference of around 56%. Interestingly, despite traveling shorter distances, **casual users spend more time with the bikes**. I validated this through the query bellow:
+   <pre>
+     SELECT
+      member_casual,
+      AVG(TIMESTAMP_DIFF(ended_at, started_at, HOUR)) AS mean_hours
+    FROM `tables_tripdata.tripdata2022_union`
+    WHERE member_casual IN ('member', 'casual')
+    GROUP BY member_casual;
+   </pre>
    
 </kbd>
 
