@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
      FROM `tables_tripdata.tripdata2022_union`
      WHERE end_lat IS NOT NULL AND member_casual = 'casual';
    </pre>
-   By the query above was possible to analyze the mean distance traveled by members and casual users. To calculate distances between start and end points, I utilized the API directions:
+   By the query above was possible to analyze the mean distance traveled by members and casual users. To calculate distances between start and end points, I utilized the API directions at Google Cloud Platform:
    <pre>
       import googlemaps
       api_key = 'API_KEY'
@@ -190,7 +190,9 @@ CREATE TABLE IF NOT EXISTS `tables_tripdata.tripdata2022_union` AS (
     WHERE member_casual IN ('member', 'casual')
     GROUP BY member_casual;
    </pre>
-   
+   ![mean_hours](https://github.com/Phnasc/case-study-bike-share/blob/main/images_cyclists_analysis/mean_hours2.png)
+
+   Members mean ride time is 10 minutes compared to casual users 12 minutes. This discrepancy could be attributed to different motivations – casual users possibly riding for leisure while members for practical purposes such as commuting.
 </kbd>
 
 
